@@ -24,11 +24,6 @@ type VarReader struct {
 	suffix string
 }
 
-type varReaderFieldTag struct {
-	varName string
-	extra   []string
-}
-
 // NewVarReaderFromEnvironment creates a VarReader that reads from environment variables.
 func NewVarReaderFromEnvironment() *VarReader {
 	r := &VarReader{result: new(ValidationResult)}
@@ -148,13 +143,14 @@ func (r *VarReader) readStructFields(target interface{}, recursive bool) bool {
 			fieldInInstancePtr = fieldInInstancePtr.Addr()
 		}
 		fieldValuePtr := fieldInInstancePtr.Interface()
-		if tagInfo.varName == "" {
+		switch {
+		case tagInfo.varName == "":
 			if recursive {
 				r.readStructFields(fieldValuePtr, true) // harmless if this isn't a struct
 			}
-		} else if tagInfo.required {
+		case tagInfo.required:
 			r.ReadRequired(tagInfo.varName, fieldValuePtr)
-		} else {
+		default:
 			r.Read(tagInfo.varName, fieldValuePtr)
 		}
 	}
