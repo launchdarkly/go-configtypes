@@ -1,0 +1,7 @@
+
+template:
+  name: go
+
+publications:
+  - url: https://pkg.go.dev/github.com/launchdarkly/go-configtypes
+    description: documentation
