@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  win: circleci/windows@1.0.0
-
 workflows:
   workflow:
     jobs:
@@ -14,8 +11,6 @@ workflows:
       - go-test:
           name: Go 1.13
           docker-image: circleci/golang:1.13
-      - go-test-windows:
-          name: Windows
 
 jobs:
   go-test:
@@ -77,18 +72,3 @@ jobs:
 
       - store_artifacts:
           path: /tmp/circle-artifacts
-
-  go-test-windows:
-    executor:
-      name: win/vs2019
-      shell: powershell.exe
-
-    environment:
-      GOPATH: C:\Users\VssAdministrator\go
-
-    steps:
-      - checkout
-      - run: go version
-      - run:
-          name: build and test
-          command: go test -race ./...
