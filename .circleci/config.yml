@@ -42,7 +42,7 @@ jobs:
           name: install go-junit-report
           command: go get -u github.com/jstemmer/go-junit-report
       
-      - run: go build ./...
+      - run: make
 
       - when:
           condition: <<parameters.run-lint>>
