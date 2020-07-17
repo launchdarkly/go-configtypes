@@ -26,28 +26,27 @@ func TestOptDuration(t *testing.T) {
 	}
 
 	assertConvertToText(t, map[string]textMarshalerAndStringer{
-		"":        OptDuration{},
-		"3ms":     NewOptDuration(3 * time.Millisecond),
-		"3s":      NewOptDuration(3 * time.Second),
-		"3m":      NewOptDuration(3 * time.Minute),
-		"3h":      NewOptDuration(3 * time.Hour),
-		"1:30":    NewOptDuration(time.Minute + 30*time.Second),
-		"1:10:30": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
+		"":         OptDuration{},
+		"3ms":      NewOptDuration(3 * time.Millisecond),
+		"3s":       NewOptDuration(3 * time.Second),
+		"3m0s":     NewOptDuration(3 * time.Minute),
+		"3h0m0s":   NewOptDuration(3 * time.Hour),
+		"1m30s":    NewOptDuration(time.Minute + 30*time.Second),
+		"1h10m30s": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
 	})
 
 	assertConvertFromText(t, &OptDuration{}, stringCtor, map[string]interface{}{
-		"":        OptDuration{},
-		"3ms":     NewOptDuration(3 * time.Millisecond),
-		"3s":      NewOptDuration(3 * time.Second),
-		"3m":      NewOptDuration(3 * time.Minute),
-		"3h":      NewOptDuration(3 * time.Hour),
-		":30":     NewOptDuration(30 * time.Second),
-		"1:30":    NewOptDuration(time.Minute + 30*time.Second),
-		"1:10:30": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
+		"":         OptDuration{},
+		"3ms":      NewOptDuration(3 * time.Millisecond),
+		"3s":       NewOptDuration(3 * time.Second),
+		"3m":       NewOptDuration(3 * time.Minute),
+		"3h":       NewOptDuration(3 * time.Hour),
+		"1m30s":    NewOptDuration(time.Minute + 30*time.Second),
+		"1h10m30s": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
 	})
 
 	assertConvertFromTextFails(t, &OptDuration{}, stringCtor, errDurationFormat(),
-		"1", "x", "1x", "00:30:",
+		"1", "x", "1x", ":30",
 	)
 
 	assertConvertToJSON(t, map[string]SingleValue{

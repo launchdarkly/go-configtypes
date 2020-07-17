@@ -2,7 +2,6 @@ package configtypes
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
@@ -10,11 +9,9 @@ import (
 
 // OptDuration represents an optional time.Duration parameter.
 //
-// When setting this value from a string representation, the following formats are allowed, where 9
-// represents any number of digits: "9ms" (milliseconds), "9s" (seconds), "9m" (minutes), "9h" (hours),
-// ":99" (seconds), "9:99" (minutes:seconds), "9:99:99" (hours:minutes:seconds).
-//
-// Converting to a string uses whichever format most compactly represents the value.
+// When setting this value from a string representation, it uses time.ParseDuration, so the allowed formats
+// include "9ms" (milliseconds), "9s" (seconds), "9m" (minutes), or combinations such as "1m30s". Converting
+// to a string uses similar rules, as implemented by Duration.String().
 //
 // When converting to or from JSON, an empty value is null, and all other values are strings.
 //
@@ -33,30 +30,9 @@ func NewOptDurationFromString(s string) (OptDuration, error) {
 	if s == "" {
 		return OptDuration{}, nil
 	}
-	var n, hh, mm, ss int
-	// note that the newlines in these format strings mean there should be no other characters after the format
-	if count, err := fmt.Sscanf(s, "%dms\n", &n); err == nil && count == 1 {
-		return NewOptDuration(time.Duration(n) * time.Millisecond), nil
-	}
-	if count, err := fmt.Sscanf(s, "%ds\n", &n); err == nil && count == 1 {
-		return NewOptDuration(time.Duration(n) * time.Second), nil
-	}
-	if count, err := fmt.Sscanf(s, "%dm\n", &n); err == nil && count == 1 {
-		return NewOptDuration(time.Duration(n) * time.Minute), nil
-	}
-	if count, err := fmt.Sscanf(s, "%dh\n", &n); err == nil && count == 1 {
-		return NewOptDuration(time.Duration(n) * time.Hour), nil
-	}
-	if count, err := fmt.Sscanf(s, ":%d\n", &ss); err == nil && count == 1 {
-		return NewOptDuration(time.Duration(ss) * time.Second), nil
-	}
-	if count, err := fmt.Sscanf(s, "%d:%d\n", &mm, &ss); err == nil && count == 2 {
-		secs := mm*60 + ss
-		return NewOptDuration(time.Duration(secs) * time.Second), nil
-	}
-	if count, err := fmt.Sscanf(s, "%d:%d:%d\n", &hh, &mm, &ss); err == nil && count == 3 {
-		secs := (hh*60+mm)*60 + ss
-		return NewOptDuration(time.Duration(secs) * time.Second), nil
+	value, err := time.ParseDuration(s)
+	if err == nil {
+		return NewOptDuration(value), nil
 	}
 	return OptDuration{}, errDurationFormat()
 }
@@ -76,30 +52,7 @@ func (o OptDuration) String() string {
 	if !o.hasValue {
 		return ""
 	}
-	d := o.value
-	hours := d / time.Hour
-	d -= hours * time.Hour
-	minutes := d / time.Minute
-	d -= minutes * time.Minute
-	seconds := d / time.Second
-	d -= seconds * time.Second
-	millis := d / time.Millisecond
-	if hours > 0 && o.value == hours*time.Hour {
-		return fmt.Sprintf("%dh", hours)
-	}
-	if minutes > 0 && o.value == minutes*time.Minute {
-		return fmt.Sprintf("%dm", minutes)
-	}
-	if seconds > 0 && o.value == seconds*time.Second {
-		return fmt.Sprintf("%ds", seconds)
-	}
-	if millis == 0 {
-		if hours == 0 {
-			return fmt.Sprintf("%d:%2d", minutes, seconds)
-		}
-		return fmt.Sprintf("%d:%2d:%2d", hours, minutes, seconds)
-	}
-	return fmt.Sprintf("%dms", d/time.Millisecond)
+	return o.value.String()
 }
 
 func (o OptDuration) MarshalText() ([]byte, error) {
