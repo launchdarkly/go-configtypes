@@ -29,6 +29,10 @@ func errMustBeNonEmptyString() Error {
 	return errors.New("value must not be an empty string")
 }
 
+func errMustBeNonNegative() Error {
+	return errors.New("value must not be negative")
+}
+
 func errRequired() Error {
 	return errors.New("value is required")
 }

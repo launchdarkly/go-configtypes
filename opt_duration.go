@@ -7,7 +7,8 @@ import (
 	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
 )
 
-// OptDuration represents an optional time.Duration parameter.
+// OptDuration represents an optional time.Duration parameter. Any time.Duration value is allowed; if you
+// want to allow only positive values (which is usually desirable), use OptDurationNonNegative.
 //
 // When setting this value from a string representation, it uses time.ParseDuration, so the allowed formats
 // include "9ms" (milliseconds), "9s" (seconds), "9m" (minutes), or combinations such as "1m30s". Converting

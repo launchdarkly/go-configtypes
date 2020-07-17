@@ -15,9 +15,17 @@ func TestOptDuration(t *testing.T) {
 	})
 
 	t.Run("defined value", func(t *testing.T) {
-		value := NewOptDuration(time.Minute)
-		assertIsDefined(t, true, value)
-		assert.Equal(t, time.Minute, value.GetOrElse(time.Minute))
+		minuteValue := NewOptDuration(time.Minute)
+		assertIsDefined(t, true, minuteValue)
+		assert.Equal(t, time.Minute, minuteValue.GetOrElse(time.Hour))
+
+		zeroValue := NewOptDuration(0)
+		assertIsDefined(t, true, zeroValue)
+		assert.Equal(t, time.Duration(0), zeroValue.GetOrElse(time.Hour))
+
+		negativeValue := NewOptDuration(-1 * time.Millisecond)
+		assertIsDefined(t, true, negativeValue)
+		assert.Equal(t, -1*time.Millisecond, negativeValue.GetOrElse(time.Hour))
 	})
 
 	stringCtor := func(input string) (interface{}, error) {
@@ -33,6 +41,7 @@ func TestOptDuration(t *testing.T) {
 		"3h0m0s":   NewOptDuration(3 * time.Hour),
 		"1m30s":    NewOptDuration(time.Minute + 30*time.Second),
 		"1h10m30s": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
+		"-1s":      NewOptDuration(-1 * time.Second),
 	})
 
 	assertConvertFromText(t, &OptDuration{}, stringCtor, map[string]interface{}{
@@ -43,6 +52,7 @@ func TestOptDuration(t *testing.T) {
 		"3h":       NewOptDuration(3 * time.Hour),
 		"1m30s":    NewOptDuration(time.Minute + 30*time.Second),
 		"1h10m30s": NewOptDuration(time.Hour + 10*time.Minute + 30*time.Second),
+		"-1s":      NewOptDuration(-1 * time.Second),
 	})
 
 	assertConvertFromTextFails(t, &OptDuration{}, stringCtor, errDurationFormat(),
