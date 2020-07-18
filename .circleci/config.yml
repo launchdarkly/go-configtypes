@@ -1,0 +1,74 @@
+version: 2.1
+
+workflows:
+  workflow:
+    jobs:
+      - go-test:
+          name: Go 1.14
+          docker-image: circleci/golang:1.14
+          run-lint: true
+          with-coverage: true
+      - go-test:
+          name: Go 1.13
+          docker-image: circleci/golang:1.13
+
+jobs:
+  go-test:
+    parameters:
+      docker-image:
+        type: string
+      run-lint:
+        type: boolean
+        default: false
+      with-coverage:
+        type: boolean
+        default: false
+    
+    docker:
+      - image: <<parameters.docker-image>>
+        environment:
+          CIRCLE_TEST_REPORTS: /tmp/circle-reports
+          CIRCLE_ARTIFACTS: /tmp/circle-artifacts
+
+    steps:
+      - checkout
+      
+      - run:
+          name: install go-junit-report
+          command: go get -u github.com/jstemmer/go-junit-report
+      
+      - run: make
+
+      - when:
+          condition: <<parameters.run-lint>>
+          steps:
+            - run: make lint    
+
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p $CIRCLE_TEST_REPORTS
+            mkdir -p $CIRCLE_ARTIFACTS
+            make test | tee $CIRCLE_ARTIFACTS/report.txt
+    
+      - run:
+          name: Process test results
+          command: go-junit-report < $CIRCLE_ARTIFACTS/report.txt > $CIRCLE_TEST_REPORTS/junit.xml
+          when: always
+      
+      - when:
+          condition: <<parameters.with-coverage>>
+          steps:
+            - run:
+                name: Verify test coverage
+                command: make test-coverage
+            - run:
+                name: Store coverage results
+                command: cp build/coverage* /tmp/circle-artifacts
+                when: always
+          
+      - store_test_results:
+          path: /tmp/circle-reports
+
+      - store_artifacts:
+          path: /tmp/circle-artifacts
