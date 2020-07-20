@@ -13,7 +13,7 @@ func errBoolFormat() Error {
 
 func errDurationFormat() Error {
 	return errors.New(
-		`not a valid duration (must use format "1ms", "1s", "1m", "1h", ":ss", "mm:ss", or "hh:mm:ss")`,
+		`not a valid duration (must use format "1ms", "1s", "1m", etc.)`,
 	)
 }
 
