@@ -21,6 +21,10 @@ func errIntFormat() Error {
 	return errors.New("not a valid integer")
 }
 
+func errFloatFormat() Error {
+	return errors.New("not a valid number")
+}
+
 func errMustBeGreaterThanZero() Error {
 	return errors.New("value must be greater than zero")
 }
