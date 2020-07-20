@@ -13,7 +13,8 @@ import (
 // translates them into values of any supported type. It accumulates errors as it goes.
 //
 // The supported types are any type that implements TextUnmarshaler (which includes all of the Opt
-// and Req types defined in this package), and also the primitive types bool, int, and string.
+// and Req types defined in this package), and also the primitive types bool, int, float64, and
+// string.
 //
 // You may specify the variable name for each target value programmatically, or use struct field
 // tags as described in ReadStruct(), or both.
@@ -248,6 +249,17 @@ func setterForTarget(target interface{}) func(data []byte) error {
 	case *int:
 		return func(data []byte) error {
 			var v OptInt
+			if err := v.UnmarshalText(data); err != nil {
+				return err
+			}
+			if v.IsDefined() {
+				*p = v.GetOrElse(0)
+			}
+			return nil
+		}
+	case *float64:
+		return func(data []byte) error {
+			var v OptFloat64
 			if err := v.UnmarshalText(data); err != nil {
 				return err
 			}

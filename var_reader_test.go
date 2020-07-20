@@ -46,27 +46,34 @@ func TestVarReader(t *testing.T) {
 
 	t.Run("reads into simple types", func(t *testing.T) {
 		r := NewVarReaderFromValues(map[string]string{
-			"BOOL":     "true",
-			"INT":      "1",
-			"STR":      "x",
-			"BAD_BOOL": "x",
-			"BAD_INT":  "1.5",
+			"BOOL":      "true",
+			"INT":       "1",
+			"FLOAT":     "1.5",
+			"STR":       "x",
+			"BAD_BOOL":  "x",
+			"BAD_INT":   "1.5",
+			"BAD_FLOAT": "x",
 		})
 		var b, bb bool
 		var i, bi int
+		var f, bf float64
 		var s string
 		assert.True(t, r.Read("BOOL", &b))
 		assert.True(t, r.Read("INT", &i))
+		assert.True(t, r.Read("FLOAT", &f))
 		assert.True(t, r.Read("STR", &s))
 		assert.True(t, r.Read("BAD_BOOL", &bb))
 		assert.True(t, r.Read("BAD_INT", &bi))
+		assert.True(t, r.Read("BAD_FLOAT", &bf))
 		assert.Equal(t, true, b)
 		assert.Equal(t, 1, i)
+		assert.Equal(t, float64(1.5), f)
 		assert.Equal(t, "x", s)
 		assert.Equal(t,
 			[]ValidationError{
 				{Path: ValidationPath{"BAD_BOOL"}, Err: errBoolFormat()},
 				{Path: ValidationPath{"BAD_INT"}, Err: errIntFormat()},
+				{Path: ValidationPath{"BAD_FLOAT"}, Err: errFloatFormat()},
 			},
 			r.Result().Errors(),
 		)
