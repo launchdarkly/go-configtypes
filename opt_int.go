@@ -17,12 +17,11 @@ import (
 // See the package documentation for the general contract for methods that have no specific documentation
 // here.
 type OptInt struct {
-	hasValue bool
-	value    int
+	v ldvalue.OptionalInt
 }
 
 func NewOptInt(value int) OptInt {
-	return OptInt{hasValue: true, value: value}
+	return OptInt{v: ldvalue.NewOptionalInt(value)}
 }
 
 func NewOptIntFromString(s string) (OptInt, error) {
@@ -37,19 +36,16 @@ func NewOptIntFromString(s string) (OptInt, error) {
 }
 
 func (o OptInt) IsDefined() bool {
-	return o.hasValue
+	return o.v.IsDefined()
 }
 
 func (o OptInt) GetOrElse(orElseValue int) int {
-	if o.hasValue {
-		return o.value
-	}
-	return orElseValue
+	return o.v.OrElse(orElseValue)
 }
 
 func (o OptInt) String() string {
-	if o.hasValue {
-		return strconv.Itoa(o.value)
+	if o.IsDefined() {
+		return strconv.Itoa(o.v.IntValue())
 	}
 	return ""
 }
@@ -67,8 +63,8 @@ func (o *OptInt) UnmarshalText(data []byte) error {
 }
 
 func (o OptInt) MarshalJSON() ([]byte, error) {
-	if o.hasValue {
-		return json.Marshal(o.value)
+	if o.IsDefined() {
+		return json.Marshal(o.v.IntValue())
 	}
 	return json.Marshal(nil)
 }

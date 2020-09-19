@@ -23,12 +23,11 @@ import (
 // See the package documentation for the general contract for methods that have no specific documentation
 // here.
 type OptBool struct {
-	hasValue bool
-	value    bool
+	v ldvalue.OptionalBool
 }
 
 func NewOptBool(value bool) OptBool {
-	return OptBool{hasValue: true, value: value}
+	return OptBool{v: ldvalue.NewOptionalBool(value)}
 }
 
 func NewOptBoolFromString(s string) (OptBool, error) {
@@ -45,14 +44,11 @@ func NewOptBoolFromString(s string) (OptBool, error) {
 }
 
 func (o OptBool) IsDefined() bool {
-	return o.hasValue
+	return o.v.IsDefined()
 }
 
 func (o OptBool) GetOrElse(orElseValue bool) bool {
-	if o.hasValue {
-		return o.value
-	}
-	return orElseValue
+	return o.v.OrElse(orElseValue)
 }
 
 func (o OptBool) String() string {
@@ -61,8 +57,8 @@ func (o OptBool) String() string {
 }
 
 func (o OptBool) MarshalText() ([]byte, error) {
-	if o.hasValue {
-		if o.value {
+	if o.IsDefined() {
+		if o.v.BoolValue() {
 			return []byte("true"), nil
 		}
 		return []byte("false"), nil
@@ -79,8 +75,8 @@ func (o *OptBool) UnmarshalText(data []byte) error {
 }
 
 func (o OptBool) MarshalJSON() ([]byte, error) {
-	if o.hasValue {
-		return json.Marshal(o.value)
+	if o.IsDefined() {
+		return json.Marshal(o.v.BoolValue())
 	}
 	return json.Marshal(nil)
 }
