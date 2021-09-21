@@ -1,6 +1,10 @@
+version: 2
 
-template:
-  name: go
+jobs:
+  - docker:
+      image: golang:1.13-buster
+    template:
+      name: go
 
 publications:
   - url: https://pkg.go.dev/github.com/launchdarkly/go-configtypes
