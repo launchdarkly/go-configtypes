@@ -4,19 +4,13 @@ workflows:
   workflow:
     jobs:
       - go-test:
-          name: Go 1.16
-          docker-image: cimg/go:1.16
-      - go-test:
-          name: Go 1.15
-          docker-image: cimg/go:1.15
-      - go-test:
-          name: Go 1.14
-          docker-image: cimg/go:1.14
+          name: Go 1.21
+          docker-image: cimg/go:1.21
           run-lint: true
           with-coverage: true
       - go-test:
-          name: Go 1.13
-          docker-image: cimg/go:1.13
+          name: Go 1.22
+          docker-image: cimg/go:1.22
 
 jobs:
   go-test:
@@ -41,7 +35,7 @@ jobs:
 
       - run:
           name: install go-junit-report
-          command: go get -u github.com/jstemmer/go-junit-report
+          command: go install github.com/jstemmer/go-junit-report/v2@latest
 
       - run: make
 
