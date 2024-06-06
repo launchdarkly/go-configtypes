@@ -29,7 +29,7 @@ jobs:
       with-coverage:
         type: boolean
         default: false
-    
+
     docker:
       - image: <<parameters.docker-image>>
         environment:
@@ -38,17 +38,17 @@ jobs:
 
     steps:
       - checkout
-      
+
       - run:
           name: install go-junit-report
           command: go get -u github.com/jstemmer/go-junit-report
-      
+
       - run: make
 
       - when:
           condition: <<parameters.run-lint>>
           steps:
-            - run: make lint    
+            - run: make lint
 
       - run:
           name: Run tests
@@ -56,12 +56,12 @@ jobs:
             mkdir -p $CIRCLE_TEST_REPORTS
             mkdir -p $CIRCLE_ARTIFACTS
             make test | tee $CIRCLE_ARTIFACTS/report.txt
-    
+
       - run:
           name: Process test results
           command: go-junit-report < $CIRCLE_ARTIFACTS/report.txt > $CIRCLE_TEST_REPORTS/junit.xml
           when: always
-      
+
       - when:
           condition: <<parameters.with-coverage>>
           steps:
@@ -72,7 +72,7 @@ jobs:
                 name: Store coverage results
                 command: cp build/coverage* /tmp/circle-artifacts
                 when: always
-          
+
       - store_test_results:
           path: /tmp/circle-reports
 

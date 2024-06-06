@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/alecthomas/units"
+
 	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
 )
 
