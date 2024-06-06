@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptURL represents an optional parameter which, if present, must be a valid URL.

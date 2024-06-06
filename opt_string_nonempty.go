@@ -1,7 +1,7 @@
 package configtypes
 
 import (
-	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptStringNonEmpty represents an optional string parameter which, if defined, must be non-empty.

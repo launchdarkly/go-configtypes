@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptFloat64 represents an optional float64 parameter.

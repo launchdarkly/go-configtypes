@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptBool represents an optional boolean parameter.

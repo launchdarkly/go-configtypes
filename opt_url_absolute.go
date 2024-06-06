@@ -3,7 +3,7 @@ package configtypes
 import (
 	"net/url"
 
-	"gopkg.in/launchdarkly/go-sdk-common.v2/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptURLAbsolute represents an optional URL parameter which, if defined, must be an absolute URL.
