@@ -49,6 +49,10 @@ func errURLFormat() Error {
 	return errors.New("not a valid URL/URI")
 }
 
+func errBase2BytesFormat() Error {
+	return errors.New("not a valid base-2 byte size")
+}
+
 func errURLNotAbsolute() Error {
 	return errors.New("must be an absolute URL/URI")
 }
