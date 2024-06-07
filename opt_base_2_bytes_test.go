@@ -23,16 +23,20 @@ func TestOptBase2Bytes(t *testing.T) {
 		unsetValue := OptBase2Bytes{}
 		assertIsDefined(t, false, unsetValue)
 		assert.Nil(t, unsetValue.Get())
+		assert.Equal(t, 0*units.KiB, unsetValue.GetOrElse(0))
+		assert.Equal(t, gigBytes, unsetValue.GetOrElse(gigBytes))
 	})
 
 	t.Run("defined value", func(t *testing.T) {
 		gigValue := NewOptBase2Bytes(gigBytes)
 		assertIsDefined(t, true, gigValue)
 		assert.Equal(t, gigBytes, *gigValue.Get())
+		assert.Equal(t, gigBytes, gigValue.GetOrElse(megBytes))
 
 		megValue := NewOptBase2Bytes(megBytes)
 		assertIsDefined(t, true, megValue)
 		assert.Equal(t, megBytes, *megValue.Get())
+		assert.Equal(t, megBytes, megValue.GetOrElse(gigBytes))
 	})
 
 	stringCtor := func(input string) (interface{}, error) {

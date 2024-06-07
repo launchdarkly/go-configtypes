@@ -46,6 +46,14 @@ func (o OptBase2Bytes) IsDefined() bool {
 	return o.size != nil
 }
 
+func (o OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes {
+	if o.size != nil {
+		return *o.size
+	}
+
+	return orElseValue
+}
+
 func (o OptBase2Bytes) Get() *units.Base2Bytes {
 	return o.size
 }
