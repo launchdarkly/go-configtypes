@@ -28,12 +28,12 @@ func TestOptBase2Bytes(t *testing.T) {
 	})
 
 	t.Run("defined value", func(t *testing.T) {
-		gigValue := NewOptBase2Bytes(gigBytes)
+		gigValue := NewOptBase2Bytes(&gigBytes)
 		assertIsDefined(t, true, gigValue)
 		assert.Equal(t, gigBytes, *gigValue.Get())
 		assert.Equal(t, gigBytes, gigValue.GetOrElse(megBytes))
 
-		megValue := NewOptBase2Bytes(megBytes)
+		megValue := NewOptBase2Bytes(&megBytes)
 		assertIsDefined(t, true, megValue)
 		assert.Equal(t, megBytes, *megValue.Get())
 		assert.Equal(t, megBytes, megValue.GetOrElse(gigBytes))
@@ -45,11 +45,11 @@ func TestOptBase2Bytes(t *testing.T) {
 	}
 
 	assertConvertToText(t, map[string]textMarshalerAndStringer{
-		"": OptBase2Bytes{}, gigString: NewOptBase2Bytes(gigBytes), megString: NewOptBase2Bytes(megBytes),
+		"": OptBase2Bytes{}, gigString: NewOptBase2Bytes(&gigBytes), megString: NewOptBase2Bytes(&megBytes),
 	})
 
 	assertConvertFromText(t, &OptBase2Bytes{}, stringCtor, map[string]interface{}{
-		"": OptBase2Bytes{}, gigString: NewOptBase2Bytes(gigBytes), megString: NewOptBase2Bytes(megBytes),
+		"": OptBase2Bytes{}, gigString: NewOptBase2Bytes(&gigBytes), megString: NewOptBase2Bytes(&megBytes),
 	})
 
 	assertConvertFromTextFails(t, &OptBase2Bytes{}, stringCtor, errBase2BytesFormat(),
@@ -57,13 +57,13 @@ func TestOptBase2Bytes(t *testing.T) {
 	)
 
 	assertConvertToJSON(t, map[string]SingleValue{
-		`null`: OptBase2Bytes{}, quoteJSONString(gigString): NewOptBase2Bytes(gigBytes),
-		quoteJSONString(megString): NewOptBase2Bytes(megBytes),
+		`null`: OptBase2Bytes{}, quoteJSONString(gigString): NewOptBase2Bytes(&gigBytes),
+		quoteJSONString(megString): NewOptBase2Bytes(&megBytes),
 	})
 
 	assertConvertFromJSON(t, &OptBase2Bytes{}, map[string]interface{}{
-		`null`: OptBase2Bytes{}, quoteJSONString(gigString): NewOptBase2Bytes(gigBytes),
-		quoteJSONString(megString): NewOptBase2Bytes(megBytes),
+		`null`: OptBase2Bytes{}, quoteJSONString(gigString): NewOptBase2Bytes(&gigBytes),
+		quoteJSONString(megString): NewOptBase2Bytes(&megBytes),
 	})
 
 	assertConvertFromJSONFails(t, &OptBase2Bytes{},

@@ -27,8 +27,8 @@ type OptBase2Bytes struct {
 	size *units.Base2Bytes
 }
 
-func NewOptBase2Bytes(size units.Base2Bytes) OptBase2Bytes {
-	return OptBase2Bytes{size: &size}
+func NewOptBase2Bytes(size *units.Base2Bytes) OptBase2Bytes {
+	return OptBase2Bytes{size: size}
 }
 
 func NewOptBase2BytesFromString(sizeAsString string) (OptBase2Bytes, error) {
@@ -37,7 +37,7 @@ func NewOptBase2BytesFromString(sizeAsString string) (OptBase2Bytes, error) {
 	}
 	size, err := units.ParseBase2Bytes(sizeAsString)
 	if err == nil {
-		return NewOptBase2Bytes(size), nil
+		return NewOptBase2Bytes(&size), nil
 	}
 	return OptBase2Bytes{}, errBase2BytesFormat()
 }
@@ -46,7 +46,7 @@ func (o OptBase2Bytes) IsDefined() bool {
 	return o.size != nil
 }
 
-func (o OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes {
+func (o *OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes {
 	if o.size != nil {
 		return *o.size
 	}
@@ -54,7 +54,7 @@ func (o OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes 
 	return orElseValue
 }
 
-func (o OptBase2Bytes) Get() *units.Base2Bytes {
+func (o *OptBase2Bytes) Get() *units.Base2Bytes {
 	return o.size
 }
 
