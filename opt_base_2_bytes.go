@@ -24,11 +24,12 @@ import (
 // See the package documentation for the general contract for methods that have
 // no specific documentation here.
 type OptBase2Bytes struct {
-	size *units.Base2Bytes
+	hasValue bool
+	size     units.Base2Bytes
 }
 
-func NewOptBase2Bytes(size *units.Base2Bytes) OptBase2Bytes {
-	return OptBase2Bytes{size: size}
+func NewOptBase2Bytes(size units.Base2Bytes) OptBase2Bytes {
+	return OptBase2Bytes{hasValue: true, size: size}
 }
 
 func NewOptBase2BytesFromString(sizeAsString string) (OptBase2Bytes, error) {
@@ -37,39 +38,42 @@ func NewOptBase2BytesFromString(sizeAsString string) (OptBase2Bytes, error) {
 	}
 	size, err := units.ParseBase2Bytes(sizeAsString)
 	if err == nil {
-		return NewOptBase2Bytes(&size), nil
+		return NewOptBase2Bytes(size), nil
 	}
 	return OptBase2Bytes{}, errBase2BytesFormat()
 }
 
 func (o OptBase2Bytes) IsDefined() bool {
-	return o.size != nil
+	return o.hasValue
 }
 
-func (o *OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes {
-	if o.size != nil {
-		return *o.size
+func (o OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes {
+	if o.IsDefined() {
+		return o.size
 	}
 
 	return orElseValue
 }
 
-func (o *OptBase2Bytes) Get() *units.Base2Bytes {
+// Get returns the value if it is defined.o
+//
+// The result of this method is only valid if IsDefined() returns true.
+func (o OptBase2Bytes) Get() units.Base2Bytes {
 	return o.size
 }
 
 func (o OptBase2Bytes) String() string {
-	if o.size == nil {
-		return ""
+	if o.IsDefined() {
+		return o.size.String()
 	}
-	return o.size.String()
+	return ""
 }
 
 func (o OptBase2Bytes) MarshalText() ([]byte, error) {
-	if o.size == nil {
-		return nil, nil
+	if o.IsDefined() {
+		return []byte(o.String()), nil
 	}
-	return []byte(o.String()), nil
+	return nil, nil
 }
 
 func (o *OptBase2Bytes) UnmarshalText(data []byte) error {
@@ -81,7 +85,7 @@ func (o *OptBase2Bytes) UnmarshalText(data []byte) error {
 }
 
 func (o OptBase2Bytes) MarshalJSON() ([]byte, error) {
-	if o.size != nil {
+	if o.IsDefined() {
 		return json.Marshal(o.size.String())
 	}
 	return json.Marshal(nil)
