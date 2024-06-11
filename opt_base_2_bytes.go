@@ -55,7 +55,7 @@ func (o OptBase2Bytes) GetOrElse(orElseValue units.Base2Bytes) units.Base2Bytes 
 	return orElseValue
 }
 
-// Get returns the value if it is defined.o
+// Get returns the value if it is defined.
 //
 // The result of this method is only valid if IsDefined() returns true.
 func (o OptBase2Bytes) Get() units.Base2Bytes {
