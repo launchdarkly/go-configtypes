@@ -102,14 +102,14 @@ func (r *VarReader) readInternal(varName string, target interface{}, required bo
 // specify `conf:"VAR_NAME,required"` in which case it behaves like ReadRequired(). If the recursive
 // parameter is true, then ReadStruct will be called recursively on any embedded structs.
 //
-//	   type myStruct struct {
-//         MyOptBool               OptBool `conf:"VAR1"`
-//         MyPrimitiveBool         bool    `conf:"VAR2"`
-//         MyRequiredBool          bool    `conf:"VAR3,required"`
-//     }
-//     s := myStruct{}
-//     r := NewVarReaderFromEnvironment()
-//     r.ReadStruct(&myStruct)
+//		   type myStruct struct {
+//	        MyOptBool               OptBool `conf:"VAR1"`
+//	        MyPrimitiveBool         bool    `conf:"VAR2"`
+//	        MyRequiredBool          bool    `conf:"VAR3,required"`
+//	    }
+//	    s := myStruct{}
+//	    r := NewVarReaderFromEnvironment()
+//	    r.ReadStruct(&myStruct)
 //
 // In the above example, each field behaves slightly differently. MyOptBool can have three states:
 // undefined (VAR1 was not set), true, or false. MyPrimitiveBool is a simple bool so there is no way
@@ -162,9 +162,9 @@ func (r *VarReader) readStructFields(target interface{}, recursive bool) bool {
 // WithVarNamePrefix returns a new VarReader based on the current one, which accumulates errors
 // in the same ValidationResult, but with the given prefix added to all variable names.
 //
-//     r0 := NewVarReaderFromValues(map[string]string{"b_x": "2", "b_y": "3"})
-//     r1 := r.WithVarNamePrefix("b_")
-//     r1.Read(&x, "x")  // x is set to "2"
+//	r0 := NewVarReaderFromValues(map[string]string{"b_x": "2", "b_y": "3"})
+//	r1 := r.WithVarNamePrefix("b_")
+//	r1.Read(&x, "x")  // x is set to "2"
 func (r *VarReader) WithVarNamePrefix(prefix string) *VarReader {
 	return &VarReader{
 		values: r.values,
@@ -177,9 +177,9 @@ func (r *VarReader) WithVarNamePrefix(prefix string) *VarReader {
 // WithVarNameSuffix returns a new VarReader based on the current one, which accumulates errors
 // in the same ValidationResult, but with the given suffix added to all variable names.
 //
-//     r0 := NewVarReaderFromValues(map[string]string{"a_x": "2", "b_x": "3"})
-//     r1 := r.WithVarNameSuffix("_x")
-//     r1.Read(&b, "b")  // b is set to "3"
+//	r0 := NewVarReaderFromValues(map[string]string{"a_x": "2", "b_x": "3"})
+//	r1 := r.WithVarNameSuffix("_x")
+//	r1.Read(&b, "b")  // b is set to "3"
 func (r *VarReader) WithVarNameSuffix(suffix string) *VarReader {
 	return &VarReader{
 		values: r.values,
@@ -192,9 +192,9 @@ func (r *VarReader) WithVarNameSuffix(suffix string) *VarReader {
 // FindPrefixedValues finds all named values in the VarReader that have the specified name prefix,
 // and returns a name-value map of only those, with the prefixes removed.
 //
-//     r := NewVarReaderFromValues(map[string]string{"a": "1", "b_x": "2", "b_y": "3"})
-//     values := r.FindPrefixedValues("b_")
-//     // values == { "x": "2", "y": "3" }
+//	r := NewVarReaderFromValues(map[string]string{"a": "1", "b_x": "2", "b_y": "3"})
+//	values := r.FindPrefixedValues("b_")
+//	// values == { "x": "2", "y": "3" }
 func (r *VarReader) FindPrefixedValues(prefix string) map[string]string {
 	ret := make(map[string]string)
 	for n, v := range r.values {
