@@ -4,7 +4,7 @@
 
 This project contains Go types and functions that are meant to simplify and standardize text-based configuration options. There is a basic set of types for strongly typed values with or without validation rules, which can be used with any text parsing code that recognizes the encoding.TextMarshaler interface. The same types can also be read from environment variables in a standard way.
 
-This version of the LaunchDarkly SDK supports Go version 1.21 or higher.
+This version of the module supports Go version 1.21 or higher.
 
 For more information, see the package documentation.
 
