@@ -9,7 +9,7 @@
       "bootstrap-sha" : "25fcfa1ba34928c6dc6d1ee29f4504b7614fa55c",
       "exclude-paths": [
         ".github",
-        ".vscode",
+        ".vscode"
       ]
     }
   }
