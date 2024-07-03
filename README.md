@@ -1,6 +1,7 @@
 # LaunchDarkly Go Configuration Types
 
-[![Circle CI](https://circleci.com/gh/launchdarkly/go-configtypes.svg?style=svg)](https://circleci.com/gh/launchdarkly/go-configtypes) [![Documentation](https://img.shields.io/static/v1?label=go.dev&message=reference&color=00add8)](https://pkg.go.dev/github.com/launchdarkly/go-configtypes)
+[![Build and Test SDK](https://github.com/launchdarkly/go-configtypes/actions/workflows/ci.yml/badge.svg)](https://github.com/launchdarkly/go-configtypes/actions/workflows/ci.yml)
+[![Documentation](https://img.shields.io/static/v1?label=go.dev&message=reference&color=00add8)](https://pkg.go.dev/github.com/launchdarkly/go-configtypes)
 
 This project contains Go types and functions that are meant to simplify and standardize text-based configuration options. There is a basic set of types for strongly typed values with or without validation rules, which can be used with any text parsing code that recognizes the encoding.TextMarshaler interface. The same types can also be read from environment variables in a standard way.
 
