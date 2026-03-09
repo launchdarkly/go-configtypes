@@ -30,6 +30,7 @@ linters:
         - name: exported
           disabled: true
   exclusions:
+    presets: []
     generated: lax
     paths:
       - third_party$
