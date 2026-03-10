@@ -58,5 +58,5 @@ func errURLNotAbsolute() Error {
 }
 
 func errValidateNonStruct() Error {
-	return errors.New("Validate was called with a parameter that was not a struct pointer") //nolint:stylecheck
+	return errors.New("Validate was called with a parameter that was not a struct pointer") //nolint:staticcheck
 }
