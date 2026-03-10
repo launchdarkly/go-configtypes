@@ -2,6 +2,13 @@
 
 All notable changes will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.2.1](https://github.com/launchdarkly/go-configtypes/compare/v1.2.0...v1.2.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* **deps:** bump supported Go versions to 1.26 and 1.25 ([#17](https://github.com/launchdarkly/go-configtypes/issues/17)) ([817a8ca](https://github.com/launchdarkly/go-configtypes/commit/817a8cafd39c1bcfaee84b2327d41735e8815cb6))
+
 ## [1.2.0](https://github.com/launchdarkly/go-configtypes/compare/1.1.0...v1.2.0) (2024-07-03)
 
 
