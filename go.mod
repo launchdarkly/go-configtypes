@@ -1,6 +1,6 @@
 module github.com/launchdarkly/go-configtypes
 
-go 1.22
+go 1.25
 
 require (
 	github.com/alecthomas/units v0.0.0-20231202071711-9a357b53e9c9
