@@ -2,6 +2,13 @@
 
 All notable changes will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.2.2](https://github.com/launchdarkly/go-configtypes/compare/v1.2.1...v1.2.2) (2026-06-04)
+
+
+### Bug Fixes
+
+* migrate to go-sdk-common/v4 (remove easyjson) ([#23](https://github.com/launchdarkly/go-configtypes/issues/23)) ([1c72c69](https://github.com/launchdarkly/go-configtypes/commit/1c72c6972a8b85465c6bb028bfe1f9786e3b4b70))
+
 ## [1.2.1](https://github.com/launchdarkly/go-configtypes/compare/v1.2.0...v1.2.1) (2026-03-25)
 
 
