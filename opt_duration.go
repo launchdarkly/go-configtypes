@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v4/ldvalue"
 )
 
 // OptDuration represents an optional time.Duration parameter. Any time.Duration value is allowed; if you
