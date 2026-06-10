@@ -4,14 +4,21 @@ go 1.25
 
 require (
 	github.com/alecthomas/units v0.0.0-20231202071711-9a357b53e9c9
-	github.com/launchdarkly/go-sdk-common/v4 v4.0.0
+	github.com/launchdarkly/go-sdk-common/v3 v3.5.0
 	github.com/stretchr/testify v1.7.0
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/josharian/intern v1.0.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/launchdarkly/go-jsonstream/v4 v4.0.0 // indirect
+	github.com/launchdarkly/go-jsonstream/v3 v3.1.1 // indirect
+	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+// v1.2.2 upgraded to the go-sdk-common/v4 core library. That /v4 major bump is a
+// breaking change for customers (Go semantic import versioning), so v1.2.2 is
+// retracted in favor of a v3-only release. See SDK-2496.
+retract v1.2.2

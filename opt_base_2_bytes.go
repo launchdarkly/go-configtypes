@@ -5,7 +5,7 @@ import (
 
 	"github.com/alecthomas/units"
 
-	"github.com/launchdarkly/go-sdk-common/v4/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptBase2Bytes represents an optional parameter which, if present, must be a

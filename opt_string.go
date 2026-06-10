@@ -1,7 +1,7 @@
 package configtypes
 
 import (
-	"github.com/launchdarkly/go-sdk-common/v4/ldvalue"
+	"github.com/launchdarkly/go-sdk-common/v3/ldvalue"
 )
 
 // OptString represents an optional string parameter.
