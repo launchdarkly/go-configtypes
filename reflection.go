@@ -46,7 +46,7 @@ func getReflectValueForStruct(value interface{}) (reflect.Value, bool) {
 		}
 		return refValue, true
 	}
-	if refValue.Kind() == reflect.Ptr {
+	if refValue.Kind() == reflect.Pointer {
 		return getReflectValueForStruct(refValue.Elem().Interface())
 	}
 	return reflect.Value{}, false
@@ -54,7 +54,7 @@ func getReflectValueForStruct(value interface{}) (reflect.Value, bool) {
 
 func getReflectValueForStructPtr(value interface{}) (reflect.Value, bool) {
 	refValue := reflect.ValueOf(value)
-	if refValue.Kind() != reflect.Ptr || refValue.Elem().Kind() != reflect.Struct {
+	if refValue.Kind() != reflect.Pointer || refValue.Elem().Kind() != reflect.Struct {
 		return reflect.Value{}, false
 	}
 	if _, ok := refValue.Elem().Interface().(SingleValue); ok {
