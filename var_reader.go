@@ -140,7 +140,7 @@ func (r *VarReader) readStructFields(target interface{}, recursive bool) bool {
 			continue
 		}
 		fieldInInstancePtr := refStruct.FieldByName(fieldInType.Name)
-		if fieldInInstancePtr.Kind() != reflect.Ptr {
+		if fieldInInstancePtr.Kind() != reflect.Pointer {
 			fieldInInstancePtr = fieldInInstancePtr.Addr()
 		}
 		fieldValuePtr := fieldInInstancePtr.Interface()
