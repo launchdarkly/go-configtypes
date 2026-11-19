@@ -22,7 +22,7 @@ sed -i -e "s#^latest=.*#latest=$latest#" \
 
 # The README states the minimum supported Go version, which tracks the penultimate release.
 if [ -n "$previous_penultimate" ]; then
-  sed -i "s/Go version $previous_penultimate/Go version $penultimate/g" README.md
+  sed -i "s/Go $previous_penultimate or later/Go $penultimate or later/g" README.md
 fi
 
 go mod edit -go="$penultimate"
